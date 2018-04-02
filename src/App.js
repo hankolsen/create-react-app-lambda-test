@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import netlifyIdentity from 'netlify-identity-widget';
 import logo from './logo.svg';
 import './App.css';
 
@@ -90,12 +91,22 @@ class LambdaDemo extends Component {
 }
 
 class App extends Component {
+  componentDidMount() {
+    netlifyIdentity.init();
+  }
+
+  handleIdentity = (e) => {
+    e.preventDefault();
+    netlifyIdentity.open();
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Slack Messenger</h1>
         </header>
+        <p><a href="#" onClick={this.handleIdentity}>User Status</a></p>
         <SlackMessage />
       </div>
     );
