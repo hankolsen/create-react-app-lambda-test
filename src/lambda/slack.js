@@ -68,7 +68,6 @@ function updateUser(identity, user, app_metadata) {
 const oneHour = (60 * 60 * 1000);
 
 export function handler(event, context, callback) {
-    console.log("Got request");
     if (event.httpMethod !== 'POST') {
         return callback(null, { statusCode: 410, body: 'Unsupported Request' });
     }
@@ -78,10 +77,8 @@ export function handler(event, context, callback) {
         return callback(null, { statusCode: 401, body: 'You must be signed in.'})
     }
 
-    console.log("Fetching user");
     fetchUser(context.clientContext.identity, claims.sub)
     .then((user) => {
-        console.log("Got user");
         const lastMessage = new Date(user.app_metadata.last_message_at || 0).getTime();
         const cutOff = new Date().getTime() - oneHour;
         if (lastMessage > cutOff) {
