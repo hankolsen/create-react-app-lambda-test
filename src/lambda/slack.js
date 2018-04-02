@@ -5,10 +5,18 @@ export function handler(event, context, callback) {
         return callback(null, { statusCode: 410, body: 'Unsupported Request' });
     }
     try {
+        const claims = context.clientContext && context.clientContext.user;
+        if (!claims) {
+            return callback(null, { statusCode: 401, body: 'You must be signed in.'})
+        }
         const payload = JSON.parse(event.body);
         fetch(slackURL, {
             method: 'POST',
-            body: JSON.stringify({ text: payload.text })
+            body: JSON.stringify({ 
+                text: payload.text,
+            attachments: [
+                { 'text': `From ${claims.email}`}
+            ] })
         })
         .then(() => {
             callback(null, { statusCode: 204 });
