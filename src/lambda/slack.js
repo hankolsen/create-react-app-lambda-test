@@ -1,7 +1,8 @@
 const fetch = require('node-fetch');
 const slackURL = process.env.SLACK_WEBHOOK_URL;
+const IdentityApi = require('../identity/Identity');
 
-class IdentityApi {
+/* class IdentityApi {
     constructor(apiURL, token) {
         this.apiURL = apiURL;
         this.token = token;
@@ -45,7 +46,7 @@ class IdentityApi {
             });
         });
     }
-}
+} */
 
 function fetchUser(identity, id) {
     const api = new IdentityApi(identity.url, identity.token);
@@ -101,7 +102,7 @@ export function handler(event, context, callback) {
                 })
             })
             .then(() => {
-                updateUser(context.clientContext.IdentityApi, user, { last_message_at: new Date().getTime() })
+                updateUser(context.clientContext.identity, user, { last_message_at: new Date().getTime() })
             })
             .then(() => {
                 callback(null, { statusCode: 204 });
