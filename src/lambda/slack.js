@@ -1,8 +1,7 @@
 const fetch = require('node-fetch');
 const slackURL = process.env.SLACK_WEBHOOK_URL;
-const IdentityApi = require('../identity/Identity');
 
-/* class IdentityApi {
+class IdentityApi {
     constructor(apiURL, token) {
         this.apiURL = apiURL;
         this.token = token;
@@ -46,7 +45,7 @@ const IdentityApi = require('../identity/Identity');
             });
         });
     }
-} */
+}
 
 function fetchUser(identity, id) {
     const api = new IdentityApi(identity.url, identity.token);
