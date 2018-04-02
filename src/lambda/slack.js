@@ -85,7 +85,7 @@ export function handler(event, context, callback) {
         const lastMessage = new Date(user.app_metadata.last_message_at || 0).getTime();
         const cutOff = new Date().getTime() - oneHour;
         if (lastMessage > cutOff) {
-            return callback(null, statusCode: 401, body: 'Only one message per hour');
+            return callback(null, { statusCode: 401, body: 'Only one message per hour' });
         }
         
         try {
